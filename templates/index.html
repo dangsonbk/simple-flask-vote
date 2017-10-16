@@ -13,58 +13,82 @@
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/component.css') }}">
         <script src="{{ url_for('static',filename='js/modernizr.custom.js') }}"></script>
     </head>
+    <script>
+        function vote(userId, unvote="No")
+        {
+            var req = new XMLHttpRequest()
+            req.onreadystatechange = function()
+            {
+                if (req.readyState == 4)
+                {
+                    if (req.status != 200)
+                    {
+                        //error handling code here
+                    }
+                    else
+                    {
+                        var response = JSON.parse(req.responseText);
+                        // alert("Voted, you have "+response+"vote(s) left");
+                        document.getElementById('starLeft').innerHTML = response+'/3';
+                    }
+                }
+            }
+
+            req.open('POST', '/');
+            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            var postVars = 'user='+userId+'&unvote='+unvote;
+            req.send(postVars);
+
+            return false;
+        }
+    </script>
     <body>
         <div class="container">
             <header class="clearfix">
                 <span>LG Electronics Vietnam <span class="bp-icon bp-icon-about" data-content=":)"></span></span>
                 <h1>^^!</h1>
-<!--                 <nav>
-                    <a href="http://tympanus.net/Blueprints/FullWidthTabs/" class="bp-icon bp-icon-prev" data-info="previous Blueprint"><span>Previous Blueprint</span></a>
-                    <a href="" class="bp-icon bp-icon-next" data-info="next Blueprint"><span>Next Blueprint</span></a>
+                <nav>
+                    <span>IP {{ ip }} |</span>
+                    <span id="starLeft">vote left: {{ starLeft }}/3</span>
+                    <!-- <a href="http://tympanus.net/Blueprints/FullWidthTabs/" class="bp-icon bp-icon-prev" data-info="previous Blueprint"><span>Previous Blueprint</span></a> -->
+<!--                     <a href="" class="bp-icon bp-icon-next" data-info="next Blueprint"><span>Next Blueprint</span></a>
                     <a href="http://tympanus.net/codrops/?p=18699" class="bp-icon bp-icon-drop" data-info="back to the Codrops article"><span>back to the Codrops article</span></a>
                     <a href="http://tympanus.net/codrops/category/blueprints/" class="bp-icon bp-icon-archive" data-info="Blueprints archive"><span>Go to the archive</span></a>
-                </nav>
- -->
+ -->                </nav>
+
             </header>
             <div id="grid-gallery" class="grid-gallery">
                 <section class="grid-wrap">
                     <ul class="grid">
                         <li class="grid-sizer"></li><!-- for Masonry column width -->
+                        {% for user in users %}
                         <li>
                             <figure>
-                                <img src="{{ url_for('static',filename='img/thumb/1.png') }}" alt="img01"/>
-                                <figcaption><h3>Letterpress asymmetrical</h3><p>Chillwave hoodie ea gentrify aute sriracha consequat.</p></figcaption>
+                                <img src="/static/thumb/SBD {{ user[3] }}" alt="{{ user[3] }}"/>
+                                <tag>{{ user[2] }}</tag>
+                                <figcaption>
+                                    <h3>{{ user[0] }} {{ user[1] }}</h3>
+                                    {% if user[0] in voted %}
+                                        <a class="cantVote" href="" onclick="vote({{ user[0] }}, 'Yes')">Voted!</a>
+                                    {% else %}
+                                        <a class="canVote" href="" onclick="vote({{ user[0] }})">Vote!</a>
+                                    {% endif %}
+                                </figcaption>
                             </figure>
                         </li>
-                        <li>
-                            <figure>
-                                <img src="{{ url_for('static',filename='img/thumb/2.png') }}" alt="img02"/>
-                                <figcaption><h3>Vice velit chia</h3><p>Laborum tattooed iPhone, Schlitz irure nulla Tonx retro 90's chia cardigan quis asymmetrical paleo. </p></figcaption>
-                            </figure>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </section><!-- // grid-wrap -->
                 <section class="slideshow">
                     <ul>
+                        {% for user in users %}
                         <li>
                             <figure>
-                                <button class="btn">Vote</button>
-                                <figcaption>
-                                    <h3>Letterpress asymmetrical</h3>
-                                    <p>Kale chips lomo biodiesel stumptown Godard Tumblr, mustache sriracha tattooed cray aute slow-carb placeat delectus. Letterpress asymmetrical fanny pack art party est pour-over skateboard anim quis, ullamco craft beer.</p>
-                                </figcaption>
-                                <img src="{{ url_for('static',filename='img/large/1.png') }}" alt="img01"/>
+                                <!-- <a href="/static/images/SBD {{ user[4] }}" target="_blank">View full</a> -->
+                                <img src="/static/images/SBD {{ user[4] }}" alt="{{ user[4] }}"/>
                             </figure>
                         </li>
-                        <li>
-                            <figure>
-                                <figcaption>
-                                    <h3>Vice velit chia</h3>
-                                    <p>Chillwave Echo Park Etsy organic Cosby sweater seitan authentic pour-over. Occupy wolf selvage bespoke tattooed, cred sustainable Odd Future hashtag butcher.</p>
-                                </figcaption>
-                                <img src="{{ url_for('static',filename='img/large/2.png') }}" alt="img02"/>
-                            </figure>
-                        </li>
+                        {% endfor %}
                     </ul>
                     <nav>
                         <span class="icon nav-prev"></span>
