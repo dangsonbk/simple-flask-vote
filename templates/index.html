@@ -29,6 +29,9 @@
                     {
                         var response = JSON.parse(req.responseText);
                         // alert("Voted, you have "+response+"vote(s) left");
+                        if(response <= 0){
+                            alert("Too lazy to implement this feature. Sorry !!!");
+                        }
                         document.getElementById('starLeft').innerHTML = response+'/3';
                     }
                 }
@@ -46,9 +49,8 @@
         <div class="container">
             <header class="clearfix">
                 <span>LG Electronics Vietnam <span class="bp-icon bp-icon-about" data-content=":)"></span></span>
-                <h1>^^!</h1>
                 <nav>
-                    <span>IP {{ ip }} |</span>
+                    <!-- <span>IP {{ ip }} |</span> -->
                     <span id="starLeft">vote left: {{ starLeft }}/3</span>
                     <!-- <a href="http://tympanus.net/Blueprints/FullWidthTabs/" class="bp-icon bp-icon-prev" data-info="previous Blueprint"><span>Previous Blueprint</span></a> -->
 <!--                     <a href="" class="bp-icon bp-icon-next" data-info="next Blueprint"><span>Next Blueprint</span></a>
@@ -59,6 +61,7 @@
             </header>
             <div id="grid-gallery" class="grid-gallery">
                 <section class="grid-wrap">
+                <p>Order: <a href="/random">random</a> | <a href="./">normal</a></p>
                     <ul class="grid">
                         <li class="grid-sizer"></li><!-- for Masonry column width -->
                         {% for user in users %}

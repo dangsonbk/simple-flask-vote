@@ -8,7 +8,9 @@
 	font-weight: normal;
 	font-style: normal;
 } /* Made with http://icomoon.io/app */
-
+a {
+	color: #47a3da;
+}
 /* General style */
 .grid-gallery ul {
 	list-style: none;

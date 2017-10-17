@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LG 20-10 voting system</title>
+        <meta name="description" content="LG 20-10 voting system" />
+        <meta name="keywords" content="LG 20-10 voting system" />
+        <meta name="author" content="Son.Nguyen" />
+        <link rel="shortcut icon" href="../favicon.ico">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/demo.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/component.css') }}">
+        <script src="{{ url_for('static',filename='js/modernizr.custom.js') }}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header class="clearfix">
+                <span>LG Electronics Vietnam <span class="bp-icon bp-icon-about" data-content=":)"></span></span>
+            </header>
+            <div id="grid-gallery" class="grid-gallery">
+                <section class="grid-wrap">
+                {% for vote in votes %}
+                    <p>{{ vote[0] }} votes: {{ vote[1] }}</p>
+                {% endfor %}
+                </section>
+            </div><!-- // grid-gallery -->
+        </div>
+    </body>
+</html>
